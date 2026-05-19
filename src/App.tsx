@@ -5,10 +5,12 @@ import About from './pages/About';
 import Team from './pages/Team';
 import Portfolio from './pages/Portfolio';
 import WorkInProgress from './pages/WorkInProgress';
+import ScrollToTop from './components/ScrollToTop';
 
 export default function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />

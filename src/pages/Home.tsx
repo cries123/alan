@@ -135,8 +135,8 @@ export default function Home() {
             <div className="aspect-square bg-white/5 p-8 border border-white/10">
               <div className="w-full h-full border border-brand-accent/30 p-2">
                 <img 
-                  src="/rr.jpg" 
-                  alt="Roinestad Residence" 
+                  src="/cs1.jpg" 
+                  alt="Alan Roinestad Construction Featured Project" 
                   className="w-full h-full object-cover opacity-80"
                 />
               </div>

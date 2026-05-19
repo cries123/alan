@@ -1,7 +1,7 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Building2, Mail, MapPin, Phone } from 'lucide-react';
-import { motion } from 'motion/react';
+import { Building2, Mail, MapPin, Phone, Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 
 interface LayoutProps {
   children: ReactNode;
@@ -9,6 +9,7 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const location = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -31,6 +32,7 @@ export default function Layout({ children }: LayoutProps) {
           <span className="text-xl font-serif tracking-tighter font-semibold">ARCM</span>
         </Link>
         
+        {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <Link 
@@ -51,10 +53,51 @@ export default function Layout({ children }: LayoutProps) {
           ))}
         </div>
 
-        <button className="px-5 py-2 bg-brand-ink text-brand-paper text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-brand-accent transition-all duration-300">
-          Contact Us
-        </button>
+        <div className="flex items-center gap-4">
+          <button className="hidden md:block px-5 py-2 bg-brand-ink text-brand-paper text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-brand-accent transition-all duration-300">
+            Contact Us
+          </button>
+          
+          <button 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden p-2 text-brand-ink"
+          >
+            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
       </nav>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed inset-0 z-40 bg-white pt-24 px-6 flex flex-col md:hidden"
+          >
+            <div className="flex flex-col gap-6">
+              {navLinks.map((link) => (
+                <Link 
+                  key={link.name} 
+                  to={link.path}
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`text-lg uppercase tracking-[0.2em] font-bold transition-all ${
+                    location.pathname === link.path ? 'text-brand-accent' : 'text-brand-ink/60'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
+              <div className="pt-6 border-t border-brand-ink/5 mt-auto pb-12">
+                <button className="w-full py-4 bg-brand-ink text-brand-paper text-[10px] uppercase tracking-[0.2em] font-bold">
+                  Contact Us
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <main className="pt-18">
         {children}
