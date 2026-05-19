@@ -1,0 +1,6 @@
+{
+  "name": "ARCM Construction",
+  "description": "A modern, high-end portfolio for Alan Roinestad Construction & Management Inc., specializing in general building and construction management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
